@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 
-import { signIn, signOut } from "@/lib/auth";
+import { signIn, signOut } from "@/lib/auth-no-edge";
 import { prisma } from "@/lib/db";
 import { checkAuth, createUser, getPetById } from "@/lib/server-utils";
 import { authSchema, petFormSchema, petIdSchema } from "@/lib/validations";
