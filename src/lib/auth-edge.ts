@@ -1,6 +1,6 @@
 import { NextAuthConfig } from "next-auth";
 
-import { getUserByEmail } from "./server-utils";
+import { prisma } from "./db";
 
 export const nextAuthEdgeConfig = {
   pages: {
@@ -58,7 +58,11 @@ export const nextAuthEdgeConfig = {
         token.hasAccess = user.hasAccess;
       }
       if (trigger === "update" && token.email) {
-        const userFromDb = await getUserByEmail(token.email);
+        const userFromDb = await prisma.user.findUnique({
+          where: {
+            email: token.email,
+          },
+        });
         if (userFromDb) {
           token.userId = userFromDb.id;
           token.hasAccess = userFromDb.hasAccess;
